@@ -1,17 +1,14 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AddTaskModal } from "@/module/tasks/AddTaskModal";
 import { TaskCard } from "@/module/tasks/TaskCard";
-import { useGetTaskQuery } from "@/redux/api/baseApi";
 
 import { taskSelector, updateFilter } from "@/redux/features/task/taskSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export const Tasks = () => {
-  const { data: tasks, isLoading } = useGetTaskQuery();
-  // const tasks = useSelector(taskSelector);
+  const tasks = useSelector(taskSelector);
   const dispatch = useDispatch();
   // const filter = useSelector(filterSelector);
-  if (isLoading) return <p>Loading tasks...</p>;
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6 gap-4">

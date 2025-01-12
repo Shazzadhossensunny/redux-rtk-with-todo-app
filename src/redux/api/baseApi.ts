@@ -5,11 +5,14 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
   tagTypes: ["Task"],
   endpoints: (builder) => ({
-    getTask: builder.query({
-      query: () => `/tasks`,
-      providesTags: [{ type: "Task", id: "LIST" }],
+    createTask: builder.mutation({
+      query: (taskInfo) => ({
+        url: `/tasks`,
+        method: "POST",
+        body: taskInfo,
+      }),
     }),
   }),
 });
 
-export const { useGetTaskQuery } = baseApi;
+export const { useCreateTaskMutation } = baseApi;
