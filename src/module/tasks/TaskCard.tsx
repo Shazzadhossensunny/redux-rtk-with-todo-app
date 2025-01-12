@@ -12,6 +12,7 @@ import { userSelector } from "@/redux/features/user/userSlice";
 import EditTaskModal from "./EditTaskModal";
 
 export const TaskCard = ({ task }: { task: TTask }) => {
+  console.log({ task });
   const dispatch = useDispatch();
   const users = useAppSelector(userSelector);
   const assignUser = users.find((user) => user.id === task.assignedTo);
