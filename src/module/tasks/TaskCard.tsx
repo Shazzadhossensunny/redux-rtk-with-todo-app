@@ -12,15 +12,14 @@ import { userSelector } from "@/redux/features/user/userSlice";
 import EditTaskModal from "./EditTaskModal";
 
 export const TaskCard = ({ task }: { task: TTask }) => {
-  console.log({ task });
   const dispatch = useDispatch();
   const users = useAppSelector(userSelector);
   const assignUser = users.find((user) => user.id === task.assignedTo);
-  const handleCheck = (id: string) => {
-    dispatch(toggleTaskComplete(id));
+  const handleCheck = (_id: string) => {
+    dispatch(toggleTaskComplete(_id));
   };
-  const handleDelete = (id: string) => {
-    dispatch(deleteTask(id));
+  const handleDelete = (_id: string) => {
+    dispatch(deleteTask(_id));
   };
 
   return (
@@ -67,7 +66,7 @@ export const TaskCard = ({ task }: { task: TTask }) => {
       <div className="flex items-center gap-2">
         <EditTaskModal task={task} />
         <button
-          onClick={() => handleDelete(task.id)}
+          onClick={() => handleDelete(task._id)}
           className="text-red-500 hover:text-red-700"
           title="Delete Task"
         >
@@ -75,7 +74,7 @@ export const TaskCard = ({ task }: { task: TTask }) => {
         </button>
         <Checkbox
           checked={task.isCompleted}
-          onClick={() => handleCheck(task.id)}
+          onClick={() => handleCheck(task._id)}
         />
       </div>
     </div>

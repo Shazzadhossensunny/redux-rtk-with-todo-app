@@ -31,7 +31,8 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { updateTask } from "@/redux/features/task/taskSlice";
+import { useUpdateTaskMutation } from "@/redux/api/baseApi";
+// import { updateTask } from "@/redux/features/task/taskSlice";
 import { userSelector } from "@/redux/features/user/userSlice";
 import { useAppSelector } from "@/redux/hook";
 import { TTask } from "@/type";
@@ -39,12 +40,10 @@ import { format } from "date-fns";
 import { CalendarIcon, Edit2 } from "lucide-react";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 
 export default function EditTaskModal({ task }: { task: TTask }) {
+  const [updateTask] = useUpdateTaskMutation();
   const [open, setOpen] = useState(false);
-
-  const dispatch = useDispatch();
   const users = useAppSelector(userSelector);
 
   const form = useForm({
@@ -53,12 +52,17 @@ export default function EditTaskModal({ task }: { task: TTask }) {
       description: task.description || "",
       priority: task.priority || "Medium",
       assignedTo: task.assignedTo || "",
-      dueDate: task.dueDate ? new Date(task.dueDate) : null, // Convert dueDate to Date object if available
+      dueDate: task.dueDate ? new Date(task.dueDate) : null,
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    dispatch(updateTask({ id: task.id, ...data }));
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const taskUpdate = {
+      id: task._id,
+      ...data,
+    };
+    const result = await updateTask(taskUpdate);
+    console.log("Task successfully update", result);
     form.reset();
     setOpen(false);
   };

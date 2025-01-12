@@ -4,12 +4,11 @@ import { TaskCard } from "@/module/tasks/TaskCard";
 import { useGetTaskQuery } from "@/redux/api/baseApi";
 
 import { taskSelector, updateFilter } from "@/redux/features/task/taskSlice";
+import { TTask } from "@/type";
 import { useDispatch, useSelector } from "react-redux";
 
 export const Tasks = () => {
   const { data: tasks, isLoading } = useGetTaskQuery([]);
-  console.log(tasks);
-
   // const tasks = useSelector(taskSelector);
   const dispatch = useDispatch();
   // const filter = useSelector(filterSelector);
@@ -54,7 +53,7 @@ export const Tasks = () => {
       </div>
       {tasks && tasks.tasks.length > 0 ? (
         <div className="space-y-4">
-          {tasks.tasks.map((task: any) => (
+          {tasks.tasks.map((task: TTask) => (
             <TaskCard key={task._id} task={task}></TaskCard>
           ))}
         </div>

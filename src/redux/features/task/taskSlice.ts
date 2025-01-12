@@ -1,10 +1,10 @@
 import { RootState } from "@/redux/store";
-import { TFilter, TTask } from "@/type";
+import { TFilter, TTaskLocal } from "@/type";
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { deleteUser } from "../user/userSlice";
 
 type TInitialState = {
-  tasks: TTask[];
+  tasks: TTaskLocal[];
   filter: TFilter;
 };
 
@@ -14,11 +14,11 @@ const initialState: TInitialState = {
 };
 
 type draftTask = Pick<
-  TTask,
+  TTaskLocal,
   "title" | "description" | "dueDate" | "priority" | "assignedTo"
 >;
 
-const createTask = (taskData: draftTask): TTask => {
+const createTask = (taskData: draftTask): TTaskLocal => {
   return { id: nanoid(), isCompleted: false, ...taskData };
 };
 
